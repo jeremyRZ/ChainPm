@@ -1,6 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
 
-const dbname = 'mydatabase.db';
+const dbname = 'chainpm.db';
 // 创建并连接一个数据库
 const db = new sqlite3.Database(dbname)
 

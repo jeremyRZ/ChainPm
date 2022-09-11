@@ -2,7 +2,7 @@ const express = require('express');
 // 用于处理post请求的消息体
 const bodyParser = require('body-parser');
 const app = express();
-const Records = require('./db').Records;
+const Records = require('./sqlite').Records;
 
 // 使用body-parser,支持编码为json的请求体
 app.use(bodyParser.json());
