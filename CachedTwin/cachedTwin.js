@@ -12,6 +12,12 @@ app.use(bodyParser.urlencoded(
         extended: true
     }
 ))
+//Open WebSocket
+var ws = new WebSocket('ws://localhost:8080');
+ws.onopen = function () {
+  console.log('ws onopen');
+  ws.send('from client: ws ready');
+};
 
 // Setting for Hyperledger Fabric
 const { Wallets, Gateway } = require('fabric-network');
@@ -20,7 +26,7 @@ const path = require('path');
 const ccpPath = path.resolve(__dirname, '.',  'connection-org1.json');
 
 const port = process.env.PORT || 3002
-// 获取记录列表
+// Get records list
 app.get('/records', (req, res, next) => {
     Records.all((err, records) => {
         if (err) return next(err);
@@ -147,7 +153,9 @@ app.post('/records', async function (req, res, next) {
         // res.send('Transaction has been submitted');
         // Disconnect from the gateway.
         await gateway.disconnect();
-        console.log("id is ",id)
+        ws.onmessage = function (e) {
+            console.log("id is ",id)
+          };
         Records.updateTranID({
             "id":id-1,
             "tranID": TranID
@@ -179,8 +187,11 @@ app.post('/addrecords', async function (req, res, next) {
                     //res.send("The next transaction block is Tx_" ,records+1)
                     if (err) return next(err);
                     id = records["last_insert_rowid()"]+1
-                    console.log("id is ",id)
-                    res.status(200).json("Add success. The next transaction block is Tx_"+ id)
+                    ws.onmessage = function (e) {
+                        console.log("id is ",id)
+                        res.status(200).json("Add success. The next transaction block is Tx_"+ id)
+                      };
+
                 })
         });
 
