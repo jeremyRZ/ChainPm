@@ -61,11 +61,11 @@ app.post('/records', async function (req, res, next) {
         let id = 0;
         Records.create({
             "tranID":TranID,
-            "UUID": req.body.UUID ? req.body.UUID : '',
+            "componentID": req.body.componentID ? req.body.componentID : '',
             "userID": req.body.userID ? req.body.userID : '',
             "taskID": req.body.taskID ? req.body.taskID : '',
             "ipAddr": req.body.ipAddr ? req.body.ipAddr : '',
-            "channal": req.body.channal ? req.body.channal : '',
+            "DTchannal": req.body.DTchannal ? req.body.DTchannal : '',
             "Date": req.body.Date ? req.body.Date : ''
             }, (err, data) => {
                 if (err) return next(err);
@@ -136,11 +136,10 @@ app.post('/addrecords', async function (req, res, next) {
         let id = 0;
         Records.create({
             "tranID":TranID,
-            "UUID": req.body.UUID ? req.body.UUID : '',
+            "componentID": req.body.componentID ? req.body.componentID : '',
             "userID": req.body.userID ? req.body.userID : '',
-            "taskID": req.body.taskID ? req.body.taskID : '',
             "ipAddr": req.body.ipAddr ? req.body.ipAddr : '',
-            "channal": req.body.channal ? req.body.channal : '',
+            "DTchannal": req.body.DTchannal ? req.body.DTchannal : '',
             "Date": req.body.Date ? req.body.Date : ''
             }, (err, data) => {
                 if (err) return next(err);
@@ -167,12 +166,11 @@ app.post('/addrecords', async function (req, res, next) {
 app.put('/records/:id', (req, res, next) => {
     Records.update({
         "id":req.params.id,
-        "TranNum": req.body.TranNum ? req.body.TranNum : '',
-        "TranID": req.body.TranID ? req.body.TranID : '',
-        "UUID": req.body.UUID ? req.body.UUID : '',
-        "UserID": req.body.UserID ? req.body.UserID : '',
-        "TaskID": req.body.TaskID ? req.body.TaskID : '',
-        "InspectionValue": req.body.InspectionValue ? req.body.InspectionValue : '',
+        "tranNum": req.body.TranNum ? req.body.TranNum : '',
+        "tranID": req.body.TranID ? req.body.TranID : '',
+        "componentID": req.body.componentID ? req.body.componentID : '',
+        "userID": req.body.UserID ? req.body.UserID : '',
+        "inspectionValue": req.body.InspectionValue ? req.body.InspectionValue : '',
         "Result": req.body.Result ? req.body.Result : '',
         "Date": req.body.Date ? req.body.Date : ''
     }, (err, data) => {

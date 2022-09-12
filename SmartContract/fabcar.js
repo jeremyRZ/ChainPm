@@ -12,14 +12,7 @@ class FabCar extends Contract {
 
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
-        const records = [
-            {
-		"TransactionData": "Paint touch-up and Final QC Inspection|S|OK",
-            },
-                        {
-		"TransactionData": "Paint touch-up and Final QC Inspection|S|OK|[http://147.8.133.247:6969/1623380249488fig1.png]|https://www.google.com",
-            },
-        ];
+        const records = [];
 
          for (let i = 0; i < records.length; i++) {
              records[i].docType = 'Inspection';
