@@ -1,12 +1,9 @@
 const express = require('express');
-// 用于处理post请求的消息体
 const bodyParser = require('body-parser');
 const app = express();
 const Records = require('./sqlite').Records;
 
-// 使用body-parser,支持编码为json的请求体
 app.use(bodyParser.json());
-// 支持编码为表单的消息体
 app.use(bodyParser.urlencoded(
     {
         extended: true
@@ -34,64 +31,28 @@ app.get('/records', (req, res, next) => {
     })
     
 });
-// 根据id获取某一份记录
+// Get a record by id
 app.get('/recordsById/:id', (req, res, next) => {
     Records.findById(req.params.id, (err, records) => {
         if (err) return next(err);
         res.send(records)
     })
 });
-// 根据Date获取某一份记录
+// Get a record by Date
 app.get('/recordsByDate/:Date',  (req, res, next) => {
     Records.findByDate(req.params.Date, (err, records) => {
         if (err) return next(err);
         res.send(records)
     })
 });
-// 根据UserID获取某一份记录
+// Get a record by userID
 app.get('/recordsByUserID/:userID',(req, res, next) => {
     Records.findByUserID(req.params.userID, (err, records) => {
         if (err) return next(err);
         res.send(records)
     })
 });
-// 根据UUID获取某一份记录
-app.get('/recordsByUUID/:UUID', async function (req, res, next) {
-    Records.findByUUID(req.params.UUID, (err, records) => {
-        if (err) return next(err);
-        res.send(records)
-    })
-});
-// 根据TaskID获取某一份记录
-app.get('/recordsByTaskID/:taskID', async function (req, res, next) {
-    Records.findByTaskID(req.params.taskID, (err, records) => {
-        if (err) return next(err);
-        res.send(records)
-    })
-});
-// // 删除一份记录
-// app.delete('/records/:id', (req, res, next) => {
-//     Records.delete(req.params.id, (err, article) => {
-//         if (err) return next(err);
-//         res.send("删除成功")
-//     })
-// });
 
-// 添加一份记录 使用消息体解析
-// var cache = {};
-// var middware = (req,res,next)=>{
-//     const key = req.url;
-//     if(cache[key]) {
-//         res.send('from cache');
-//     } else {
-//         res.sendResponse = res.send;
-//         res.send = (body)=>{
-//             cache[key] = body;
-//             res.sendResponse(body);
-//         }
-//         next();
-//     }
-// }
 
 app.post('/records', async function (req, res, next) {
     let TranID = '';
@@ -202,7 +163,7 @@ app.post('/addrecords', async function (req, res, next) {
 })
 
 
-// 更新一份记录数据
+// Update Records
 app.put('/records/:id', (req, res, next) => {
     Records.update({
         "id":req.params.id,

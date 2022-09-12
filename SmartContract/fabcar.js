@@ -21,12 +21,6 @@ class FabCar extends Contract {
             },
         ];
 
-        // for (const record of records) {
-        //     record.docType = 'Inspection';
-        //     await ctx.stub.putState(record.UUID, Buffer.from(JSON.stringify(record)));
-        //     console.info(`Record ${record.UUID} initialized`);
-        // }
-
          for (let i = 0; i < records.length; i++) {
              records[i].docType = 'Inspection';
              await ctx.stub.putState('Tx_' + i, Buffer.from(JSON.stringify(records[i])));
@@ -75,20 +69,6 @@ class FabCar extends Contract {
         console.info(allResults);
         return JSON.stringify(allResults);
     }
-
-    // async changeCarOwner(ctx, carNumber, newOwner) {
-    //     console.info('============= START : changeCarOwner ===========');
-
-    //     const recordAsBytes = await ctx.stub.getState(carNumber); // get the car from chaincode state
-    //     if (!recordAsBytes || recordAsBytes.length === 0) {
-    //         throw new Error(`${carNumber} does not exist`);
-    //     }
-    //     const car = JSON.parse(recordAsBytes.toString());
-    //     car.owner = newOwner;
-
-    //     await ctx.stub.putState(carNumber, Buffer.from(JSON.stringify(car)));
-    //     console.info('============= END : changeCarOwner ===========');
-    // }
 
 }
 
