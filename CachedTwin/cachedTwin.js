@@ -73,8 +73,10 @@ app.post('/records', async function (req, res, next) {
                     //res.send("The next transaction block is Tx_" ,records+1)
                     if (err) return next(err);
                     id = records["last_insert_rowid()"]+1
-                    console.log("id is ",id)
-                    res.status(200).json("Add success. The next transaction block is Tx_"+ id)
+                    ws.onmessage = function (e) {
+                        console.log("id is ",id)
+                        res.status(200).json("Add success. The next transaction block is Tx_"+ id)
+                      };
                 })
         });
 
@@ -110,51 +112,18 @@ app.post('/records', async function (req, res, next) {
 
         const result = await contract.submitTransaction('addRecord',id, req.body.TransactionData);
         TranID = result.toString();
-        console.log(`Transaction has been evaluated, TranID is: ${result.toString()}`);
+        ws.onmessage = function (e) {
+            console.log(`Transaction has been evaluated, TranID is: ${result.toString()}`);
+          };
         // res.send('Transaction has been submitted');
         // Disconnect from the gateway.
         await gateway.disconnect();
-        ws.onmessage = function (e) {
-            console.log("id is ",id)
-          };
         Records.updateTranID({
             "id":id-1,
             "tranID": TranID
             }, (err, data) => {
                 if (err) return next(err);
         });
-    } catch (error) {
-        console.error(`Failed to submit transaction: ${error}`);
-        process.exit(1);
-    }
-})
-
-app.post('/addrecords', async function (req, res, next) {
-    let TranID = '';
-
-    try {
-        let id = 0;
-        Records.create({
-            "tranID":TranID,
-            "componentID": req.body.componentID ? req.body.componentID : '',
-            "userID": req.body.userID ? req.body.userID : '',
-            "ipAddr": req.body.ipAddr ? req.body.ipAddr : '',
-            "DTchannal": req.body.DTchannal ? req.body.DTchannal : '',
-            "Date": req.body.Date ? req.body.Date : ''
-            }, (err, data) => {
-                if (err) return next(err);
-                Records.findLatest((err, records) => {
-                    //res.send("The next transaction block is Tx_" ,records+1)
-                    if (err) return next(err);
-                    id = records["last_insert_rowid()"]+1
-                    ws.onmessage = function (e) {
-                        console.log("id is ",id)
-                        res.status(200).json("Add success. The next transaction block is Tx_"+ id)
-                      };
-
-                })
-        });
-
     } catch (error) {
         console.error(`Failed to submit transaction: ${error}`);
         process.exit(1);
