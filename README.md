@@ -10,4 +10,4 @@ The Cached Twin sublayer aims to improve the performance of indexing and analyti
 ### Smart Contract
 Smart contracts based on the Hyperledger Fabric development platform are the medium through which the upper layer applications interact with the underlying blockchain platform.
 ## License
-[MIT License](https://github.com/jeremyRZ/ChainPM/blob/main/LICENSE)
+[Apache License 2.0](https://github.com/jeremyRZ/ChainPM/blob/main/LICENSE)
